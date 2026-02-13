@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cloud Phone Web Console</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Cloud Phone Web Console</h1>
+      <p>开发启动版：设备列表 + 会话创建 + 云手机画布占位</p>
+    </header>
+
+    <main>
+      <section class="panel">
+        <div class="panel-head">
+          <h2>设备列表</h2>
+          <button id="refreshBtn">刷新</button>
+        </div>
+        <div id="deviceList" class="device-list"></div>
+      </section>
+
+      <section class="panel">
+        <h2>远程操控区</h2>
+        <div class="screen-placeholder" id="screenPlaceholder">
+          <span>等待会话建立（下一步接入 WebRTC 视频流）</span>
+        </div>
+        <pre id="sessionInfo" class="session-info"></pre>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
