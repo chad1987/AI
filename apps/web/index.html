@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cloud Phone Web Console</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Cloud Phone Web Console</h1>
+      <p>iPhone 原型云手机：设备连接 + 预装 APP（淘宝/京东/备忘录/计算器）</p>
+    </header>
+
+    <main>
+      <section class="panel">
+        <div class="panel-head">
+          <h2>设备列表</h2>
+          <button id="refreshBtn">刷新</button>
+        </div>
+        <div id="deviceList" class="device-list"></div>
+      </section>
+
+      <section class="panel">
+        <h2>云手机（iPhone 原型）</h2>
+        <div class="iphone-shell">
+          <div class="iphone-notch"></div>
+          <div class="iphone-screen">
+            <div class="status-bar">
+              <span id="clock">09:41</span>
+              <span>5G 🔋</span>
+            </div>
+
+            <div class="app-screen" id="homeScreen">
+              <div class="app-grid">
+                <button class="app-icon taobao" data-app="taobao">🛒<span>淘宝</span></button>
+                <button class="app-icon jd" data-app="jd">🧧<span>京东</span></button>
+                <button class="app-icon note" data-app="notes">📝<span>备忘录</span></button>
+                <button class="app-icon calc" data-app="calculator">🧮<span>计算器</span></button>
+              </div>
+              <div class="dock">预装 APP：淘宝 / 京东 / 备忘录 / 计算器</div>
+            </div>
+
+            <div class="app-screen hidden" id="taobaoScreen">
+              <h3>淘宝</h3>
+              <input id="tbKeyword" placeholder="搜索商品，如：手机壳" />
+              <button id="tbSearchBtn">搜索</button>
+              <ul id="tbList" class="app-list"></ul>
+            </div>
+
+            <div class="app-screen hidden" id="jdScreen">
+              <h3>京东</h3>
+              <input id="jdKeyword" placeholder="搜索商品，如：充电器" />
+              <button id="jdSearchBtn">搜索</button>
+              <ul id="jdList" class="app-list"></ul>
+            </div>
+
+            <div class="app-screen hidden" id="notesScreen">
+              <h3>备忘录</h3>
+              <textarea id="notesInput" rows="9" placeholder="输入备忘内容"></textarea>
+              <button id="saveNoteBtn">保存备忘录</button>
+              <p id="notesResult" class="hint"></p>
+            </div>
+
+            <div class="app-screen hidden" id="calculatorScreen">
+              <h3>计算器</h3>
+              <div class="calc-wrap">
+                <input id="calcExpr" placeholder="示例: 12+3*4-5/2" />
+                <button id="calcBtn">计算</button>
+                <p id="calcResult" class="hint"></p>
+              </div>
+            </div>
+
+            <button class="home-button" id="homeBtn">Home</button>
+          </div>
+        </div>
+
+        <pre id="sessionInfo" class="session-info"></pre>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
