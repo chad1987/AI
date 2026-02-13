@@ -1,5 +1,5 @@
 :root {
-  --bg: #0f172a;
+  --bg: #0b1020;
   --card: #111827;
   --text: #e5e7eb;
   --subtext: #9ca3af;
@@ -12,19 +12,16 @@
 body {
   margin: 0;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  background: var(--bg);
+  background: linear-gradient(180deg, #0b1020 0%, #0f172a 100%);
   color: var(--text);
 }
 
-header {
-  padding: 20px;
-  border-bottom: 1px solid #1f2937;
-}
+header { padding: 20px; border-bottom: 1px solid #1f2937; }
 header p { color: var(--subtext); margin-top: 8px; }
 
 main {
   display: grid;
-  grid-template-columns: 380px 1fr;
+  grid-template-columns: 360px 1fr;
   gap: 16px;
   padding: 16px;
 }
@@ -36,39 +33,128 @@ main {
   padding: 14px;
 }
 
-.panel-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-button {
-  background: var(--accent);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 10px;
-  cursor: pointer;
-}
+.panel-head { display: flex; justify-content: space-between; align-items: center; }
+button { background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 8px 10px; cursor: pointer; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
 
 .device-list { display: grid; gap: 10px; margin-top: 12px; }
-.device-item {
-  border: 1px solid #374151;
-  border-radius: 10px;
-  padding: 10px;
-}
+.device-item { border: 1px solid #374151; border-radius: 10px; padding: 10px; }
 .device-meta { color: var(--subtext); font-size: 13px; }
 .status-running { color: var(--ok); }
 .status-stopped { color: var(--warn); }
 
-.screen-placeholder {
+.iphone-shell {
   margin-top: 12px;
-  min-height: 460px;
-  border: 1px dashed #374151;
+  width: 320px;
+  height: 650px;
+  border-radius: 42px;
+  background: #030712;
+  border: 8px solid #1f2937;
+  padding: 10px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+}
+
+.iphone-notch {
+  width: 120px;
+  height: 28px;
+  background: #000;
+  border-radius: 20px;
+  margin: 0 auto 8px;
+}
+
+.iphone-screen {
+  background: radial-gradient(circle at top, #1d4ed8, #111827 55%);
+  border-radius: 30px;
+  height: calc(100% - 36px);
+  padding: 10px;
+  position: relative;
+}
+
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #dbeafe;
+  margin-bottom: 8px;
+}
+
+.app-screen {
+  background: rgba(17, 24, 39, 0.52);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  height: 520px;
+  padding: 12px;
+  backdrop-filter: blur(4px);
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.app-icon {
+  height: 110px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.app-icon span { font-size: 14px; }
+
+.dock {
+  margin-top: 18px;
+  text-align: center;
+  color: #dbeafe;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 12px;
+  padding: 8px;
+  font-size: 12px;
+}
+
+.hidden { display: none; }
+
+input, textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #374151;
+  background: #0b1020;
+  color: #e5e7eb;
+  padding: 8px;
+}
+
+.camera-preview {
+  height: 280px;
+  border: 1px dashed #60a5fa;
+  border-radius: 10px;
   display: grid;
   place-items: center;
-  color: var(--subtext);
+  margin-bottom: 12px;
+  color: #bfdbfe;
+}
+
+.toggle {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.hint { color: #93c5fd; font-size: 13px; }
+
+.home-button {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .session-info {

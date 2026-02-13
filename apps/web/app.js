@@ -2,10 +2,48 @@ const API_BASE = 'http://localhost:8080';
 const deviceListEl = document.getElementById('deviceList');
 const refreshBtn = document.getElementById('refreshBtn');
 const sessionInfoEl = document.getElementById('sessionInfo');
-const screenPlaceholder = document.getElementById('screenPlaceholder');
+
+const homeScreen = document.getElementById('homeScreen');
+const appScreens = {
+  phone: document.getElementById('phoneScreen'),
+  messages: document.getElementById('messagesScreen'),
+  camera: document.getElementById('cameraScreen'),
+  settings: document.getElementById('settingsScreen'),
+};
+
+const callBtn = document.getElementById('callBtn');
+const dialInput = document.getElementById('dialInput');
+const callResult = document.getElementById('callResult');
+
+const sendMsgBtn = document.getElementById('sendMsgBtn');
+const messageInput = document.getElementById('messageInput');
+const messageResult = document.getElementById('messageResult');
+
+const snapBtn = document.getElementById('snapBtn');
+const cameraResult = document.getElementById('cameraResult');
+
+const airplaneMode = document.getElementById('airplaneMode');
+const silentMode = document.getElementById('silentMode');
+const settingsResult = document.getElementById('settingsResult');
+
+const homeBtn = document.getElementById('homeBtn');
+const clockEl = document.getElementById('clock');
 
 function statusClass(status) {
   return status === 'running' ? 'status-running' : 'status-stopped';
+}
+
+function showApp(appName) {
+  homeScreen.classList.add('hidden');
+  Object.values(appScreens).forEach((el) => el.classList.add('hidden'));
+  if (appScreens[appName]) {
+    appScreens[appName].classList.remove('hidden');
+  }
+}
+
+function goHome() {
+  Object.values(appScreens).forEach((el) => el.classList.add('hidden'));
+  homeScreen.classList.remove('hidden');
 }
 
 async function createSession(deviceId) {
@@ -21,7 +59,6 @@ async function createSession(deviceId) {
   }
 
   sessionInfoEl.textContent = JSON.stringify(data, null, 2);
-  screenPlaceholder.innerHTML = '<span>会话已创建：下一步将这里替换成 WebRTC 视频组件</span>';
 }
 
 function renderDevices(items) {
@@ -78,5 +115,44 @@ async function loadDevices() {
   }
 }
 
+function wirePhoneApps() {
+  document.querySelectorAll('.app-icon').forEach((icon) => {
+    icon.addEventListener('click', () => {
+      showApp(icon.dataset.app);
+    });
+  });
+
+  homeBtn.addEventListener('click', goHome);
+
+  callBtn.addEventListener('click', () => {
+    const number = dialInput.value.trim();
+    callResult.textContent = number ? `正在呼叫 ${number}...` : '请输入有效号码';
+  });
+
+  sendMsgBtn.addEventListener('click', () => {
+    const text = messageInput.value.trim();
+    messageResult.textContent = text ? '短信已发送（模拟）' : '请输入短信内容';
+  });
+
+  snapBtn.addEventListener('click', () => {
+    cameraResult.textContent = `拍照成功（模拟） ${new Date().toLocaleTimeString()}`;
+  });
+
+  function updateSettings() {
+    settingsResult.textContent = `飞行模式: ${airplaneMode.checked ? '开' : '关'}，静音: ${silentMode.checked ? '开' : '关'}`;
+  }
+
+  airplaneMode.addEventListener('change', updateSettings);
+  silentMode.addEventListener('change', updateSettings);
+
+  setInterval(() => {
+    clockEl.textContent = new Date().toLocaleTimeString('zh-CN', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }, 1000);
+}
+
 refreshBtn.addEventListener('click', loadDevices);
+wirePhoneApps();
 loadDevices();
