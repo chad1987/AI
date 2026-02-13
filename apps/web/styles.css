@@ -97,7 +97,6 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 .app-icon {
   height: 110px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.2);
   font-size: 28px;
   display: flex;
@@ -107,6 +106,10 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
   gap: 8px;
 }
 .app-icon span { font-size: 14px; }
+.app-icon.taobao { background: rgba(249, 115, 22, 0.3); }
+.app-icon.jd { background: rgba(239, 68, 68, 0.3); }
+.app-icon.note { background: rgba(34, 197, 94, 0.25); }
+.app-icon.calc { background: rgba(148, 163, 184, 0.25); }
 
 .dock {
   margin-top: 18px;
@@ -130,22 +133,16 @@ input, textarea {
   padding: 8px;
 }
 
-.camera-preview {
-  height: 280px;
-  border: 1px dashed #60a5fa;
-  border-radius: 10px;
-  display: grid;
-  place-items: center;
-  margin-bottom: 12px;
-  color: #bfdbfe;
+.app-list {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: #c7d2fe;
+  max-height: 360px;
+  overflow: auto;
 }
+.app-list li { margin-bottom: 8px; }
 
-.toggle {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
+.calc-wrap { margin-top: 10px; }
 .hint { color: #93c5fd; font-size: 13px; }
 
 .home-button {

@@ -4,30 +4,20 @@ const refreshBtn = document.getElementById('refreshBtn');
 const sessionInfoEl = document.getElementById('sessionInfo');
 
 const homeScreen = document.getElementById('homeScreen');
-const appScreens = {
-  phone: document.getElementById('phoneScreen'),
-  messages: document.getElementById('messagesScreen'),
-  camera: document.getElementById('cameraScreen'),
-  settings: document.getElementById('settingsScreen'),
-};
-
-const callBtn = document.getElementById('callBtn');
-const dialInput = document.getElementById('dialInput');
-const callResult = document.getElementById('callResult');
-
-const sendMsgBtn = document.getElementById('sendMsgBtn');
-const messageInput = document.getElementById('messageInput');
-const messageResult = document.getElementById('messageResult');
-
-const snapBtn = document.getElementById('snapBtn');
-const cameraResult = document.getElementById('cameraResult');
-
-const airplaneMode = document.getElementById('airplaneMode');
-const silentMode = document.getElementById('silentMode');
-const settingsResult = document.getElementById('settingsResult');
 
 const homeBtn = document.getElementById('homeBtn');
 const clockEl = document.getElementById('clock');
+
+const appScreens = {
+  taobao: document.getElementById('taobaoScreen'),
+  jd: document.getElementById('jdScreen'),
+  notes: document.getElementById('notesScreen'),
+  calculator: document.getElementById('calculatorScreen'),
+};
+
+const taobaoGoods = ['iPhone 手机壳', '蓝牙耳机', 'Type-C 充电线', '机械键盘', '运动手表'];
+const jdGoods = ['65W 快充头', '无线鼠标', '移动硬盘 1TB', '路由器 AX3000', '显示器支架'];
+
 
 function statusClass(status) {
   return status === 'running' ? 'status-running' : 'status-stopped';
@@ -44,6 +34,30 @@ function showApp(appName) {
 function goHome() {
   Object.values(appScreens).forEach((el) => el.classList.add('hidden'));
   homeScreen.classList.remove('hidden');
+}
+
+function renderList(el, items) {
+  el.innerHTML = '';
+  if (!items.length) {
+    el.innerHTML = '<li>未找到相关商品</li>';
+    return;
+  }
+  items.forEach((item) => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    el.appendChild(li);
+  });
+}
+
+function safeEvalMath(expr) {
+  if (!/^[0-9+\-*/().\s]+$/.test(expr)) {
+    throw new Error('仅支持数字和 + - * / ( )');
+  }
+  const result = Function(`"use strict"; return (${expr})`)();
+  if (Number.isNaN(result) || !Number.isFinite(result)) {
+    throw new Error('表达式无效');
+  }
+  return result;
 }
 
 async function createSession(deviceId) {
@@ -115,7 +129,9 @@ async function loadDevices() {
   }
 }
 
-function wirePhoneApps() {
+
+function wirePreinstalledApps() {
+
   document.querySelectorAll('.app-icon').forEach((icon) => {
     icon.addEventListener('click', () => {
       showApp(icon.dataset.app);
@@ -124,26 +140,47 @@ function wirePhoneApps() {
 
   homeBtn.addEventListener('click', goHome);
 
-  callBtn.addEventListener('click', () => {
-    const number = dialInput.value.trim();
-    callResult.textContent = number ? `正在呼叫 ${number}...` : '请输入有效号码';
+  const tbKeyword = document.getElementById('tbKeyword');
+  const tbSearchBtn = document.getElementById('tbSearchBtn');
+  const tbList = document.getElementById('tbList');
+  tbSearchBtn.addEventListener('click', () => {
+    const keyword = tbKeyword.value.trim();
+    const items = keyword ? taobaoGoods.filter((x) => x.includes(keyword)) : taobaoGoods;
+    renderList(tbList, items);
+  });
+  renderList(tbList, taobaoGoods);
+
+  const jdKeyword = document.getElementById('jdKeyword');
+  const jdSearchBtn = document.getElementById('jdSearchBtn');
+  const jdList = document.getElementById('jdList');
+  jdSearchBtn.addEventListener('click', () => {
+    const keyword = jdKeyword.value.trim();
+    const items = keyword ? jdGoods.filter((x) => x.includes(keyword)) : jdGoods;
+    renderList(jdList, items);
+  });
+  renderList(jdList, jdGoods);
+
+  const notesInput = document.getElementById('notesInput');
+  const saveNoteBtn = document.getElementById('saveNoteBtn');
+  const notesResult = document.getElementById('notesResult');
+  notesInput.value = localStorage.getItem('cloudPhoneMemo') || '';
+  saveNoteBtn.addEventListener('click', () => {
+    localStorage.setItem('cloudPhoneMemo', notesInput.value);
+    notesResult.textContent = `已保存 ${new Date().toLocaleTimeString()}`;
   });
 
-  sendMsgBtn.addEventListener('click', () => {
-    const text = messageInput.value.trim();
-    messageResult.textContent = text ? '短信已发送（模拟）' : '请输入短信内容';
+  const calcExpr = document.getElementById('calcExpr');
+  const calcBtn = document.getElementById('calcBtn');
+  const calcResult = document.getElementById('calcResult');
+  calcBtn.addEventListener('click', () => {
+    try {
+      const expr = calcExpr.value.trim();
+      const value = safeEvalMath(expr);
+      calcResult.textContent = `结果: ${value}`;
+    } catch (error) {
+      calcResult.textContent = `错误: ${error.message}`;
+    }
   });
-
-  snapBtn.addEventListener('click', () => {
-    cameraResult.textContent = `拍照成功（模拟） ${new Date().toLocaleTimeString()}`;
-  });
-
-  function updateSettings() {
-    settingsResult.textContent = `飞行模式: ${airplaneMode.checked ? '开' : '关'}，静音: ${silentMode.checked ? '开' : '关'}`;
-  }
-
-  airplaneMode.addEventListener('change', updateSettings);
-  silentMode.addEventListener('change', updateSettings);
 
   setInterval(() => {
     clockEl.textContent = new Date().toLocaleTimeString('zh-CN', {
@@ -154,5 +191,7 @@ function wirePhoneApps() {
 }
 
 refreshBtn.addEventListener('click', loadDevices);
-wirePhoneApps();
+
+wirePreinstalledApps();
+
 loadDevices();
