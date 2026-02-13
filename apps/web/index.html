@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cloud Phone Web Console</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Cloud Phone Web Console</h1>
+      <p>iPhone 原型云手机：设备连接 + 基础手机功能演示</p>
+    </header>
+
+    <main>
+      <section class="panel">
+        <div class="panel-head">
+          <h2>设备列表</h2>
+          <button id="refreshBtn">刷新</button>
+        </div>
+        <div id="deviceList" class="device-list"></div>
+      </section>
+
+      <section class="panel">
+        <h2>云手机（iPhone 原型）</h2>
+        <div class="iphone-shell" id="screenPlaceholder">
+          <div class="iphone-notch"></div>
+          <div class="iphone-screen">
+            <div class="status-bar">
+              <span id="clock">09:41</span>
+              <span>5G 🔋</span>
+            </div>
+
+            <div class="app-screen" id="homeScreen">
+              <div class="app-grid">
+                <button class="app-icon" data-app="phone">📞<span>电话</span></button>
+                <button class="app-icon" data-app="messages">💬<span>短信</span></button>
+                <button class="app-icon" data-app="camera">📷<span>相机</span></button>
+                <button class="app-icon" data-app="settings">⚙️<span>设置</span></button>
+              </div>
+              <div class="dock">Cloud Phone iOS Prototype</div>
+            </div>
+
+            <div class="app-screen hidden" id="phoneScreen">
+              <h3>电话</h3>
+              <input id="dialInput" placeholder="输入号码" />
+              <button id="callBtn">拨号</button>
+              <p id="callResult" class="hint"></p>
+            </div>
+
+            <div class="app-screen hidden" id="messagesScreen">
+              <h3>短信</h3>
+              <textarea id="messageInput" rows="4" placeholder="输入短信内容"></textarea>
+              <button id="sendMsgBtn">发送</button>
+              <p id="messageResult" class="hint"></p>
+            </div>
+
+            <div class="app-screen hidden" id="cameraScreen">
+              <h3>相机</h3>
+              <div class="camera-preview">📷 预览画面（模拟）</div>
+              <button id="snapBtn">拍照</button>
+              <p id="cameraResult" class="hint"></p>
+            </div>
+
+            <div class="app-screen hidden" id="settingsScreen">
+              <h3>设置</h3>
+              <label class="toggle">
+                <span>飞行模式</span>
+                <input id="airplaneMode" type="checkbox" />
+              </label>
+              <label class="toggle">
+                <span>静音模式</span>
+                <input id="silentMode" type="checkbox" />
+              </label>
+              <p id="settingsResult" class="hint"></p>
+            </div>
+
+            <button class="home-button" id="homeBtn">Home</button>
+          </div>
+        </div>
+
+        <pre id="sessionInfo" class="session-info"></pre>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
