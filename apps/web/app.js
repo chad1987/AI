@@ -4,6 +4,7 @@ const refreshBtn = document.getElementById('refreshBtn');
 const sessionInfoEl = document.getElementById('sessionInfo');
 
 const homeScreen = document.getElementById('homeScreen');
+
 const homeBtn = document.getElementById('homeBtn');
 const clockEl = document.getElementById('clock');
 
@@ -16,6 +17,7 @@ const appScreens = {
 
 const taobaoGoods = ['iPhone 手机壳', '蓝牙耳机', 'Type-C 充电线', '机械键盘', '运动手表'];
 const jdGoods = ['65W 快充头', '无线鼠标', '移动硬盘 1TB', '路由器 AX3000', '显示器支架'];
+
 
 function statusClass(status) {
   return status === 'running' ? 'status-running' : 'status-stopped';
@@ -127,7 +129,9 @@ async function loadDevices() {
   }
 }
 
+
 function wirePreinstalledApps() {
+
   document.querySelectorAll('.app-icon').forEach((icon) => {
     icon.addEventListener('click', () => {
       showApp(icon.dataset.app);
@@ -187,5 +191,7 @@ function wirePreinstalledApps() {
 }
 
 refreshBtn.addEventListener('click', loadDevices);
+
 wirePreinstalledApps();
+
 loadDevices();
